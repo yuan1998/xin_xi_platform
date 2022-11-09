@@ -24,10 +24,10 @@ class TxAccountController extends AdminController
             $grid->column('access_token');
             $grid->column('refresh_token');
             $grid->column('enable');
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -64,7 +64,7 @@ class TxAccountController extends AdminController
             $form->text('account_id');
             $form->text('access_token');
             $form->text('refresh_token');
-            $form->text('enable');
+            $form->switch('enable');
         });
     }
 }
