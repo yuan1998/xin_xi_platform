@@ -1,0 +1,35 @@
+<?php
+return [
+    'labels' => [
+        'KsReportDatum' => 'KsReportDatum',
+        'ks-report-datum' => 'KsReportDatum',
+    ],
+    'fields' => [
+        'advertiser_id' => '广告主ID',
+        'stat_date' => '数据日期',
+        'charge' => '花费（元）',
+        'show' => '封面曝光数',
+        'photo_click' => '封面点击数',
+        'aclick' => '素材曝光数',
+        'bclick' => '行为数',
+        'photo_click_ratio' => '封面点击率',
+        'action_ratio' => '行为率',
+        'impression_1k_cost' => '平均千次曝光花费（元）',
+        'photo_click_cost' => '平均点击单价（元）',
+        'action_cost' => '平均行为单价（元）',
+        'negative' => '减少此类作品数',
+        'submit' => '提交按钮点击数',
+        'form_count' => '落地页数据-表单提交数',
+        'form_cost' => '落地页数据-表单提交单价',
+        'form_action_ratio' => '落地页数据-表单提交点击率',
+        'event_jin_jian_landing_page' => '落地页数据-落地页完件数',
+        'event_jin_jian_landing_page_cost' => '落地页数据-落地页完件成本',
+        'event_valid_clues' => '落地页数据-有效线索数',
+        'event_valid_clues_cost' => '落地页数据-有效线索成本',
+        'event_add_wechat' => '微信复制数',
+        'event_add_wechat_cost' => '微信复制成本',
+        'event_add_wechat_ratio' => '微信复制率',
+    ],
+    'options' => [
+    ],
+];

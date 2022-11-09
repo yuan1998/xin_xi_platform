@@ -1,0 +1,55 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app.d1e8e631.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/js/Pages/Copy.vue",
+      "resources/js/Pages/JlAuth.vue",
+      "resources/js/Pages/KsAuth.vue",
+      "resources/js/Pages/VivoAuth.vue"
+    ],
+    "css": [
+      "assets/app.dacc7fec.css"
+    ]
+  },
+  "resources/js/Pages/Copy.vue": {
+    "file": "assets/Copy.99d0c1ca.js",
+    "src": "resources/js/Pages/Copy.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index.eac9e03e.js",
+      "resources/js/app.js"
+    ]
+  },
+  "_index.eac9e03e.js": {
+    "file": "assets/index.eac9e03e.js"
+  },
+  "resources/js/Pages/JlAuth.vue": {
+    "file": "assets/JlAuth.165e1368.js",
+    "src": "resources/js/Pages/JlAuth.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index.eac9e03e.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/KsAuth.vue": {
+    "file": "assets/KsAuth.56b57cc5.js",
+    "src": "resources/js/Pages/KsAuth.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index.eac9e03e.js",
+      "resources/js/app.js"
+    ]
+  },
+  "resources/js/Pages/VivoAuth.vue": {
+    "file": "assets/VivoAuth.f46bfde1.js",
+    "src": "resources/js/Pages/VivoAuth.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index.eac9e03e.js",
+      "resources/js/app.js"
+    ]
+  }
+}
