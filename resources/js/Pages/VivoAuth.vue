@@ -5,10 +5,9 @@
 import copy from 'copy-to-clipboard';
 import {ElMessage} from "element-plus";
 
-const {app, baseUrl} = defineProps(['app', 'baseUrl']);
+const {app, redirectUri} = defineProps(['app', 'redirectUri']);
 
 const authUrl = () => {
-    let redirectUri = `${baseUrl}/api/auth/vivo`;
     let url = `https://open-ad.vivo.com.cn/OAuth?clientId=${app.client_id}&redirectUri=${redirectUri}`;
 
     if (copy(url)) {

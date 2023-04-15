@@ -20,22 +20,25 @@ class JlAppController extends AdminController
         return Grid::make(new JlApp(), function (Grid $grid) {
 
             $grid->column('name');
+            $grid->column('version', '版本');
             $grid->column('app_id');
             $grid->column('app_secret');
             $grid->column('id')->display(function () {
                 $dataJson = json_encode([
                     'app_id' => $this->app_id
                 ]);
-                $dataJson =  urlencode($dataJson);
-                $baseUrl= env('APP_URL');
-                $redirectUri = "{$baseUrl}/api/auth/jl";
-                $url = "https://ad.oceanengine.com/openapi/audit/oauth.html?app_id={$this->app_id}&redirect_uri={$redirectUri}&state={$dataJson}";
+                $dataJson = urlencode($dataJson);
+                $redirectUri =route('oauth.jl');
+                if ($this->version === 3)
+                    $url = "https://open.oceanengine.com/audit/oauth.html?app_id={$this->app_id}&state={$dataJson}&material_auth=1&redirect_uri={$redirectUri}";
+                else {
+                    $url = "https://ad.oceanengine.com/openapi/audit/oauth.html?app_id={$this->app_id}&redirect_uri={$redirectUri}&state={$dataJson}";
+                }
 
                 return $url;
             });
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-
             });
         });
     }
@@ -66,6 +69,9 @@ class JlAppController extends AdminController
     {
         return Form::make(new JlApp(), function (Form $form) {
             $form->display('id');
+            $form->select('version', '版本')
+                ->options(JlApp::$VersionOptions)
+                ->default(2);
             $form->text('name');
             $form->text('app_id');
             $form->text('app_secret');

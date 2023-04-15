@@ -24,17 +24,11 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         if (admin_setting('PULL_REPORT_JL')) {
             $schedule->call(function () {
-                JlAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/10");
-            $schedule->call(function () {
                 JlAccount::getReportOfYesterday();
             })->dailyAt("00:10");
         }
 
         if (admin_setting('PULL_REPORT_KS')) {
-            $schedule->call(function () {
-                KsAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/11");
             $schedule->call(function () {
                 KsAccount::getReportOfYesterday();
             })->dailyAt("00:09");
@@ -42,17 +36,11 @@ class Kernel extends ConsoleKernel
 
         if (admin_setting('PULL_REPORT_TX')) {
             $schedule->call(function () {
-                TxAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/12");
-            $schedule->call(function () {
                 TxAccount::getReportOfYesterday();
             })->dailyAt("00:08");
         }
 
         if (admin_setting('PULL_REPORT_BD')) {
-            $schedule->call(function () {
-                BaiduAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/13");
             $schedule->call(function () {
                 BaiduAccount::getReportOfYesterday();
             })->dailyAt("00:07");
@@ -60,17 +48,11 @@ class Kernel extends ConsoleKernel
 
         if (admin_setting('PULL_REPORT_VIVO')) {
             $schedule->call(function () {
-                VivoAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/14");
-            $schedule->call(function () {
                 VivoAccount::getReportOfYesterday();
             })->dailyAt("00:06");
         }
 
         if (admin_setting('PULL_REPORT_UC')) {
-            $schedule->call(function () {
-                UcAccount::getReportOfToday();
-            })->spliceIntoPosition(1, "*/14");
             $schedule->call(function () {
                 UcAccount::getReportOfYesterday();
             })->dailyAt("00:05");

@@ -35,13 +35,21 @@ class TxClient extends BaseClient
             'page' => 1,
             'page_size' => 200,
             'fields' => [
+                "name",
+                "ad_name",
+                "ad_id",
+                "ad",
+                "campaign_id",
+                "campaign_name",
                 "date", "account_id", "view_count", "valid_click_count", "ctr", "cpc", "cost", "page_reservation_count", "page_reservation_cost",
             ]
         ];
 
 
+        $query = array_merge($parameters, $common_parameters, $data);
+
         $response = self::get($url, [
-            'query' => array_merge($parameters,$common_parameters, $data ),
+            'query' => $query,
         ]);
         $body = $response->getBody()->getContents();
         $result = json_decode($body, true);

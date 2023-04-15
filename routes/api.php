@@ -17,13 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'namespace' => '\\App\\Http\\Controllers\\Api'
 ], function () {
-    Route::get('auth/vivo', "AccountAuthController@vivoAuth");
-    Route::get('auth/jl', "AccountAuthController@juliangAuth");
-    Route::get('auth/ks', "AccountAuthController@ksAuth");
-
+    Route::get('auth/vivo', "AccountAuthController@vivoAuth")->name('oauth.vivo');
+    Route::get('auth/jl', "AccountAuthController@juliangAuth")->name('oauth.jl');
+    Route::get('auth/ks', "AccountAuthController@ksAuth")->name('oauth.ks');
 });
 
 
 Route::get('/test', function () {
-    \App\Models\KsAccount::test();
+    \App\Models\JlAccount::test();
 });

@@ -24,20 +24,19 @@ class JlAccountController extends AdminController
             $grid->column('advertiser_name');
             $grid->column('run_date');
             $grid->column('run_status_log');
-            $grid->column('rebate');
-            $grid->column('comment');
-            $grid->column('log');
-            $grid->column('app_id');
-            $grid->column('token_id');
-            $grid->column('advertiser_role');
-            $grid->column('enable');
-            $grid->column('enable_robot');
+//            $grid->column('rebate');
+            $grid->column('comment')->editable();
+//            $grid->column('log');
+//            $grid->column('app_id');
+//            $grid->column('token_id');
+//            $grid->column('advertiser_role');
+            $grid->column('enable')->switch();
+//            $grid->column('enable_robot');
             $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+//            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-
             });
         });
     }

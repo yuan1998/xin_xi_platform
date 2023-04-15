@@ -24,7 +24,7 @@ class VivoAppController extends AdminController
                         'client_id' => $this->client_id,
                         'id' => $this->id,
                     ],
-                    'baseUrl' => env('APP_URL')
+                    'redirectUri' => route('oauth.vivo')
                 ])
                     ->rootView('admin.app')
                     ->toResponse(request())

@@ -9,16 +9,12 @@ use Carbon\Carbon;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 
 class JlAccount extends Model
 {
     use HasFactory;
     use HasDateTimeFormatter;
     use HasAccountToken;
-
 
     protected $fillable = [
         "advertiser_id",
@@ -139,12 +135,42 @@ class JlAccount extends Model
                 'start_date' => $startDate,
                 'end_date' => $endDate
             ], $token);
+            [$newMsg, $newResult] = JlClient::getNewVersionAdvertiserPlanData([
+                'advertiser_id' => $id,
+                "start_time" => $startDate,
+                "end_time" => $endDate,
+            ], $token);
 
             if ($msg)
                 $messages[] = "$id : $msg";
-            if ($result)
+            if ($result && count($result))
                 $data = array_merge($data, $result);
 
+            if ($newMsg)
+                $messages[] = "新版 $id : $msg";
+            if ($newResult && count($newResult)) {
+                $newResult = collect($newResult)->map(function ($item) {
+                    return [
+                        "campaign_id" => data_get($item, 'dimensions.cdp_project_id'),
+                        "campaign_name" => data_get($item, 'dimensions.cdp_project_name'),
+                        "ad_id" => data_get($item, 'dimensions.cdp_promotion_id'),
+                        "ad_name" => data_get($item, 'dimensions.cdp_promotion_name'),
+                        "stat_datetime" => data_get($item, 'dimensions.stat_time_day'),
+                        "cost" => data_get($item, 'metrics.stat_cost', 0),
+                        "convert_cost" => data_get($item, 'metrics.conversion_cost', 0),
+                        "avg_click_cost" => data_get($item, 'metrics.conversion_cost', 0),
+                        "click" => data_get($item, 'metrics.cpc_platform', 0),
+                        "convert_rate" => data_get($item, 'metrics.conversion_rate', 0),
+                        "ctr" => data_get($item, 'metrics.ctr', 0),
+                        "avg_show_cost" => data_get($item, 'metrics.cpm_platform', 0),
+                        "convert" => data_get($item, 'metrics.convert_cnt', 0),
+                        "show" => data_get($item, 'metrics.show_cnt', 0),
+                    ];
+                })->filter(function ($item) {
+                    return $item['campaign_id'] && $item['ad_id'] && $item['stat_datetime'] && $item['cost'] && $item['convert'] && $item['show'];
+                })->toArray();
+                $data = array_merge($data, $newResult);
+            }
         }
 
         return [$messages, $data];
@@ -193,6 +219,17 @@ class JlAccount extends Model
     {
         $dateString = Carbon::yesterday()->toDateString();
         return static::getAccountReportData($dateString, $dateString);
+    }
+
+
+    public static function test()
+    {
+        $account = static::find(4);
+        $data = $account->getReportData('2023-04-14', '2023-04-14');
+//        $majordomoChild = JlClient::getMajordomoAccount($account->advertiser_id, $token);
+//        dd($majordomoChild);
+        dd($data);
+
     }
 
 }

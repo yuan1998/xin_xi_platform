@@ -13,6 +13,8 @@ class JlClient extends BaseClient
         'refresh_token' => 'https://ad.oceanengine.com/open_api/oauth2/refresh_token/',
         'account_info' => 'https://ad.oceanengine.com/open_api/2/user/info/',
         'advertiser_plan_data' => 'https://ad.oceanengine.com/open_api/2/report/ad/get/',
+        'new_advertiser_plan_data' => 'https://api.oceanengine.com/open_api/v3.0/report/custom/get/',
+        'new_advertiser_config' => 'https://api.oceanengine.com/open_api/v3.0/report/custom/config/get/',
         'account_auth' => 'https://ad.oceanengine.com/open_api/oauth2/advertiser/get/',
         'majordomo_account' => 'https://ad.oceanengine.com/open_api/2/majordomo/advertiser/select/',
         'feiyu_clue' => 'https://ad.oceanengine.com/open_api/2/tools/clue/get/',
@@ -46,6 +48,74 @@ class JlClient extends BaseClient
         $status = data_get($jsonData, 'code') === 0;
         if ($status)
             return [null, data_get($jsonData, 'data.list', [])];
+
+        return [data_get($jsonData, 'message', '获取失败'), null];
+    }
+
+    public static function getNewVersionAdConfig(array $data, string $token)
+    {
+        $data = array_merge([
+            'advertiser_id' => '',
+            'data_topics' => json_encode(['BASIC_DATA']),
+        ], $data);
+        $queryStr = http_build_query($data);
+        $url = static::$request_url['new_advertiser_config'];
+//        dd($queryStr);
+        $response = self::get("{$url}?$queryStr", [
+//            'query' => $data,
+            'headers' => [
+                "Access-Token" => $token,
+            ]
+        ]);
+
+        $content = $response->getBody()->getContents();
+        $jsonData = json_decode($content, true);
+        $status = data_get($jsonData, 'code') === 0;
+
+        if ($status)
+            return [null, data_get($jsonData, 'data.list', [])];
+
+        return [data_get($jsonData, 'message', '获取失败'), null];
+    }
+
+    /**
+     * 获取广告主计划数据 - 新版
+     * @param $data  array Body参数
+     * @param $token string access_token
+     * @return mixed
+     */
+    public static function getNewVersionAdvertiserPlanData(array $data, string $token)
+    {
+
+        $data = array_merge([
+            'advertiser_id' => 'xxxxx',
+            "dimensions" => json_encode(["stat_time_day","cdp_promotion_name","cdp_promotion_id","cdp_project_name","cdp_project_id"]),
+            "metrics" => json_encode(["stat_cost", "show_cnt", "cpm_platform", "click_cnt", "ctr", "cpc_platform", "convert_cnt", "conversion_cost", "conversion_rate", "deep_convert_cnt", "deep_convert_cost", "deep_convert_rate"]),
+            "filters" => json_encode([]),
+            "order_by" => json_encode([
+                [
+                    'field' => 'stat_time_day',
+                    'type' => 'DESC',
+                ]
+            ]),
+            "start_time" => "2023-04-01",
+            "end_time" => "2023-04-14",
+            "page" => 1,
+            "page_size" => 100,
+        ], $data);
+        $queryStr = http_build_query($data);
+        $url = static::$request_url['new_advertiser_plan_data'];
+
+        $response = self::get("$url?$queryStr", [
+            'headers' => [
+                "Access-Token" => $token,
+            ]
+        ]);
+        $content = $response->getBody()->getContents();
+        $jsonData = json_decode($content, true);
+        $status = data_get($jsonData, 'code') === 0;
+        if ($status)
+            return [null, data_get($jsonData, 'data.rows', [])];
 
         return [data_get($jsonData, 'message', '获取失败'), null];
     }

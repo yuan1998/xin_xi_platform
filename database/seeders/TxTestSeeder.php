@@ -66,13 +66,7 @@ class TxTestSeeder extends Seeder
         $account = TxAccount::query()->where('account_id','23950733')->first();
 
         if (!$account) return;
-        $client = new TxClient($account);
-        [$msg, $data] = $client->getReportData([
-            'date_range' => [
-                'start_date' => '2022-10-04',
-                'end_date' => '2022-10-04',
-            ],
-        ]);
+       $data = $account->getReportData('2022-10-04','2022-10-04');
 
         if ($data) {
             TxReportDatum::saveReportData($data);

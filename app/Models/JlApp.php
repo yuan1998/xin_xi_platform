@@ -15,5 +15,12 @@ class JlApp extends Model
         'name',
         'app_id',
         'app_secret',
+        'version',
     ];
+
+    public static $VersionOptions = [
+        '2' => 'v2版本',
+        '3' => 'v3版本'
+    ];
+
 }

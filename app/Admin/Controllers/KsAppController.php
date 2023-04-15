@@ -27,8 +27,7 @@ class KsAppController extends AdminController
                     'app_id' => $this->app_id
                 ]);
                 $dataJson =  urlencode($dataJson);
-                $baseUrl= env('APP_URL');
-                $redirectUri = "{$baseUrl}/api/auth/ks";
+                $redirectUri = route('oauth.ks');
                 $url = "https://developers.e.kuaishou.com/tools/authorize?app_id={$this->app_id}&scope=%5B%22ad_query%22%2C%22ad_manage%22%2C%22report_service%22%2C%22public_dmp_service%22%2C%22public_agent_service%22%2C%22public_account_service%22%5D&redirect_uri={$redirectUri}&state={$dataJson}&oauth_type=advertiser";
                 return $url;
             })->copyable();

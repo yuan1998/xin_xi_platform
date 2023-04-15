@@ -31,6 +31,7 @@ class TxAccount extends Model
         $this->run_date = now();
         $this->run_status = RunStatus::OK_STATUS;
         [$msg, $data] = TxClient::getReportData([
+            'level' => 'REPORT_LEVEL_AD',
             'date_range' => [
                 'start_date' => $start,
                 'end_date' => $end,
