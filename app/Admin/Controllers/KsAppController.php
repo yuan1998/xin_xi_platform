@@ -18,11 +18,7 @@ class KsAppController extends AdminController
     protected function grid()
     {
         return Grid::make(new KsApp(), function (Grid $grid) {
-
-            $grid->column('name');
-            $grid->column('app_id');
-            $grid->column('app_secret');
-            $grid->column('id')->display(function () {
+            $grid->column('id','操作')->display(function () {
                 $dataJson = json_encode([
                     'app_id' => $this->app_id
                 ]);
@@ -30,7 +26,10 @@ class KsAppController extends AdminController
                 $redirectUri = route('oauth.ks');
                 $url = "https://developers.e.kuaishou.com/tools/authorize?app_id={$this->app_id}&scope=%5B%22ad_query%22%2C%22ad_manage%22%2C%22report_service%22%2C%22public_dmp_service%22%2C%22public_agent_service%22%2C%22public_account_service%22%5D&redirect_uri={$redirectUri}&state={$dataJson}&oauth_type=advertiser";
                 return $url;
-            })->copyable();
+            })->newCopyable('复制授权链接');
+            $grid->column('name');
+            $grid->column('app_id');
+//            $grid->column('app_secret');
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
 

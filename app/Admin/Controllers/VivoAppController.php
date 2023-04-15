@@ -18,6 +18,7 @@ class VivoAppController extends AdminController
     protected function grid()
     {
         return Grid::make(new VivoApp(), function (Grid $grid) {
+            $grid->scrollbarX();
             $grid->column('id')->display(function () {
                 return \Inertia\Inertia::render('VivoAuth', [
                     'app' => [
@@ -29,12 +30,12 @@ class VivoAppController extends AdminController
                     ->rootView('admin.app')
                     ->toResponse(request())
                     ->content();
-            });
+            })->newCopyable('复制授权链接');
             $grid->column('name');
             $grid->column('client_id');
-            $grid->column('secret');
+//            $grid->column('secret');
             $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+//            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');

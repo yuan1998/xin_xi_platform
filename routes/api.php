@@ -21,8 +21,3 @@ Route::group([
     Route::get('auth/jl', "AccountAuthController@juliangAuth")->name('oauth.jl');
     Route::get('auth/ks', "AccountAuthController@ksAuth")->name('oauth.ks');
 });
-
-
-Route::get('/test', function () {
-    \App\Models\JlAccount::test();
-});

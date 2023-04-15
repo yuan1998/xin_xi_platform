@@ -18,17 +18,12 @@ class JlAppController extends AdminController
     protected function grid()
     {
         return Grid::make(new JlApp(), function (Grid $grid) {
-
-            $grid->column('name');
-            $grid->column('version', '版本');
-            $grid->column('app_id');
-            $grid->column('app_secret');
-            $grid->column('id')->display(function () {
+            $grid->column('id','操作')->display(function () {
                 $dataJson = json_encode([
                     'app_id' => $this->app_id
                 ]);
                 $dataJson = urlencode($dataJson);
-                $redirectUri =route('oauth.jl');
+                $redirectUri = route('oauth.jl');
                 if ($this->version === 3)
                     $url = "https://open.oceanengine.com/audit/oauth.html?app_id={$this->app_id}&state={$dataJson}&material_auth=1&redirect_uri={$redirectUri}";
                 else {
@@ -36,7 +31,12 @@ class JlAppController extends AdminController
                 }
 
                 return $url;
-            });
+            })->newCopyable("复制授权链接");
+            $grid->column('name');
+            $grid->column('version', '版本')->using(JlApp::$VersionOptions);
+            $grid->column('app_id');
+            $grid->column('app_secret');
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
             });
