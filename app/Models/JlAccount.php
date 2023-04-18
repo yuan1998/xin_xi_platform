@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class JlAccount extends Model
 {
@@ -123,7 +124,12 @@ class JlAccount extends Model
                     }
                 }
                 break;
+            default:
+                Log::error("未知的角色",[$this['advertiser_role']]);
+                return ["未知的角色.无法获取账户.",null];
         }
+        if(!count($list))
+            return ["无法获取账户.{$this['advertiser_name']}",null];
 
 
         $messages = [];
