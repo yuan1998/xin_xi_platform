@@ -20,6 +20,7 @@ Route::group([
     $router->resource("vivo_accounts", "VivoAccountController");
     $router->resource("vivo_report_data", "VivoReportDatumController");
 
+    $router->resource("bd_apps", "BdAppController");
     $router->resource("baidu_accounts", "BaiduAccountController");
     $router->resource("baidu_report_data", "BaiduReportDatumController");
 

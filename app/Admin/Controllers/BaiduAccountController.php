@@ -20,12 +20,13 @@ class BaiduAccountController extends AdminController
         return Grid::make(new BaiduAccount(), function (Grid $grid) {
             $grid->column('id')->sortable();
             $grid->column('username');
-            $grid->column('token');
-            $grid->column('password');
-            $grid->column('type');
-            $grid->column('targets');
+            $grid->column('access_token');
+//            $grid->column('password');
+            $grid->column('authType')->using(BaiduAccount::$AuthTypeOptions);
+            $grid->column('type')->using(BaiduAccount::$TypeOptions);
+//            $grid->column('targets');
             $grid->column('created_at');
-            $grid->column('updated_at')->sortable();
+//            $grid->column('updated_at')->sortable();
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
@@ -69,16 +70,12 @@ class BaiduAccountController extends AdminController
             $form->text('token');
             $form->switch('enable')->default(1);
             $form->radio('type')
-                ->when(0, function (Form $form) {
+                ->when(2, function (Form $form) {
                     $form->tags('targets')->saving(function ($val) {
                         return implode(',', $val);
                     });
-
                 })
-                ->options([
-                    0 => '管家',
-                    1 => '普通'
-                ])
+                ->options(BaiduAccount::$TypeOptions)
                 ->default(0);
 
             $form->display('created_at');

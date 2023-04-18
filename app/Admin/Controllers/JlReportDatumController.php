@@ -48,8 +48,14 @@ class JlReportDatumController extends AdminController
                 $filter->like('ad_id');
                 $filter->like('campaign_name');
                 $filter->like('campaign_id');
-                $filter->between('stat_datetime')
-                    ->date();
+                $filter->whereBetween('stat_datetime', function ($query) {
+                    $start = $this->input['start'] ?? null;
+                    $end = $this->input['end'] ?? null;
+                    if ($start)
+                        $query->where('stat_datetime', ">=", "$start 00:00:00");
+                    if ($end)
+                        $query->where('stat_datetime', "<=", "$end 23:59:59");
+                })->date();
             });
         });
     }

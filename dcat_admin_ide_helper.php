@@ -37,6 +37,9 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection remember_token
      * @property Grid\Column|Collection username
      * @property Grid\Column|Collection enable
+     * @property Grid\Column|Collection run_date
+     * @property Grid\Column|Collection run_status
+     * @property Grid\Column|Collection run_status_log
      * @property Grid\Column|Collection targets
      * @property Grid\Column|Collection token
      * @property Grid\Column|Collection aggrFormSubmitSuccess
@@ -51,6 +54,8 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection formSubmitCost
      * @property Grid\Column|Collection impression
      * @property Grid\Column|Collection userName
+     * @property Grid\Column|Collection app_id
+     * @property Grid\Column|Collection app_secret
      * @property Grid\Column|Collection connection
      * @property Grid\Column|Collection exception
      * @property Grid\Column|Collection failed_at
@@ -60,13 +65,11 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection advertiser_id
      * @property Grid\Column|Collection advertiser_name
      * @property Grid\Column|Collection advertiser_role
-     * @property Grid\Column|Collection app_id
      * @property Grid\Column|Collection comment
      * @property Grid\Column|Collection enable_robot
      * @property Grid\Column|Collection log
      * @property Grid\Column|Collection rebate
      * @property Grid\Column|Collection token_id
-     * @property Grid\Column|Collection app_secret
      * @property Grid\Column|Collection ad_id
      * @property Grid\Column|Collection ad_name
      * @property Grid\Column|Collection avg_click_cost
@@ -85,9 +88,6 @@ namespace Dcat\Admin {
      * @property Grid\Column|Collection industry_name
      * @property Grid\Column|Collection primary_industry_id
      * @property Grid\Column|Collection primary_industry_name
-     * @property Grid\Column|Collection run_date
-     * @property Grid\Column|Collection run_status
-     * @property Grid\Column|Collection run_status_log
      * @property Grid\Column|Collection user_name
      * @property Grid\Column|Collection aclick
      * @property Grid\Column|Collection action_cost
@@ -174,6 +174,9 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection remember_token(string $label = null)
      * @method Grid\Column|Collection username(string $label = null)
      * @method Grid\Column|Collection enable(string $label = null)
+     * @method Grid\Column|Collection run_date(string $label = null)
+     * @method Grid\Column|Collection run_status(string $label = null)
+     * @method Grid\Column|Collection run_status_log(string $label = null)
      * @method Grid\Column|Collection targets(string $label = null)
      * @method Grid\Column|Collection token(string $label = null)
      * @method Grid\Column|Collection aggrFormSubmitSuccess(string $label = null)
@@ -188,6 +191,8 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection formSubmitCost(string $label = null)
      * @method Grid\Column|Collection impression(string $label = null)
      * @method Grid\Column|Collection userName(string $label = null)
+     * @method Grid\Column|Collection app_id(string $label = null)
+     * @method Grid\Column|Collection app_secret(string $label = null)
      * @method Grid\Column|Collection connection(string $label = null)
      * @method Grid\Column|Collection exception(string $label = null)
      * @method Grid\Column|Collection failed_at(string $label = null)
@@ -197,13 +202,11 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection advertiser_id(string $label = null)
      * @method Grid\Column|Collection advertiser_name(string $label = null)
      * @method Grid\Column|Collection advertiser_role(string $label = null)
-     * @method Grid\Column|Collection app_id(string $label = null)
      * @method Grid\Column|Collection comment(string $label = null)
      * @method Grid\Column|Collection enable_robot(string $label = null)
      * @method Grid\Column|Collection log(string $label = null)
      * @method Grid\Column|Collection rebate(string $label = null)
      * @method Grid\Column|Collection token_id(string $label = null)
-     * @method Grid\Column|Collection app_secret(string $label = null)
      * @method Grid\Column|Collection ad_id(string $label = null)
      * @method Grid\Column|Collection ad_name(string $label = null)
      * @method Grid\Column|Collection avg_click_cost(string $label = null)
@@ -222,9 +225,6 @@ namespace Dcat\Admin {
      * @method Grid\Column|Collection industry_name(string $label = null)
      * @method Grid\Column|Collection primary_industry_id(string $label = null)
      * @method Grid\Column|Collection primary_industry_name(string $label = null)
-     * @method Grid\Column|Collection run_date(string $label = null)
-     * @method Grid\Column|Collection run_status(string $label = null)
-     * @method Grid\Column|Collection run_status_log(string $label = null)
      * @method Grid\Column|Collection user_name(string $label = null)
      * @method Grid\Column|Collection aclick(string $label = null)
      * @method Grid\Column|Collection action_cost(string $label = null)
@@ -316,6 +316,9 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection remember_token
      * @property Show\Field|Collection username
      * @property Show\Field|Collection enable
+     * @property Show\Field|Collection run_date
+     * @property Show\Field|Collection run_status
+     * @property Show\Field|Collection run_status_log
      * @property Show\Field|Collection targets
      * @property Show\Field|Collection token
      * @property Show\Field|Collection aggrFormSubmitSuccess
@@ -330,6 +333,8 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection formSubmitCost
      * @property Show\Field|Collection impression
      * @property Show\Field|Collection userName
+     * @property Show\Field|Collection app_id
+     * @property Show\Field|Collection app_secret
      * @property Show\Field|Collection connection
      * @property Show\Field|Collection exception
      * @property Show\Field|Collection failed_at
@@ -339,13 +344,11 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection advertiser_id
      * @property Show\Field|Collection advertiser_name
      * @property Show\Field|Collection advertiser_role
-     * @property Show\Field|Collection app_id
      * @property Show\Field|Collection comment
      * @property Show\Field|Collection enable_robot
      * @property Show\Field|Collection log
      * @property Show\Field|Collection rebate
      * @property Show\Field|Collection token_id
-     * @property Show\Field|Collection app_secret
      * @property Show\Field|Collection ad_id
      * @property Show\Field|Collection ad_name
      * @property Show\Field|Collection avg_click_cost
@@ -364,9 +367,6 @@ namespace Dcat\Admin {
      * @property Show\Field|Collection industry_name
      * @property Show\Field|Collection primary_industry_id
      * @property Show\Field|Collection primary_industry_name
-     * @property Show\Field|Collection run_date
-     * @property Show\Field|Collection run_status
-     * @property Show\Field|Collection run_status_log
      * @property Show\Field|Collection user_name
      * @property Show\Field|Collection aclick
      * @property Show\Field|Collection action_cost
@@ -453,6 +453,9 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection remember_token(string $label = null)
      * @method Show\Field|Collection username(string $label = null)
      * @method Show\Field|Collection enable(string $label = null)
+     * @method Show\Field|Collection run_date(string $label = null)
+     * @method Show\Field|Collection run_status(string $label = null)
+     * @method Show\Field|Collection run_status_log(string $label = null)
      * @method Show\Field|Collection targets(string $label = null)
      * @method Show\Field|Collection token(string $label = null)
      * @method Show\Field|Collection aggrFormSubmitSuccess(string $label = null)
@@ -467,6 +470,8 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection formSubmitCost(string $label = null)
      * @method Show\Field|Collection impression(string $label = null)
      * @method Show\Field|Collection userName(string $label = null)
+     * @method Show\Field|Collection app_id(string $label = null)
+     * @method Show\Field|Collection app_secret(string $label = null)
      * @method Show\Field|Collection connection(string $label = null)
      * @method Show\Field|Collection exception(string $label = null)
      * @method Show\Field|Collection failed_at(string $label = null)
@@ -476,13 +481,11 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection advertiser_id(string $label = null)
      * @method Show\Field|Collection advertiser_name(string $label = null)
      * @method Show\Field|Collection advertiser_role(string $label = null)
-     * @method Show\Field|Collection app_id(string $label = null)
      * @method Show\Field|Collection comment(string $label = null)
      * @method Show\Field|Collection enable_robot(string $label = null)
      * @method Show\Field|Collection log(string $label = null)
      * @method Show\Field|Collection rebate(string $label = null)
      * @method Show\Field|Collection token_id(string $label = null)
-     * @method Show\Field|Collection app_secret(string $label = null)
      * @method Show\Field|Collection ad_id(string $label = null)
      * @method Show\Field|Collection ad_name(string $label = null)
      * @method Show\Field|Collection avg_click_cost(string $label = null)
@@ -501,9 +504,6 @@ namespace Dcat\Admin {
      * @method Show\Field|Collection industry_name(string $label = null)
      * @method Show\Field|Collection primary_industry_id(string $label = null)
      * @method Show\Field|Collection primary_industry_name(string $label = null)
-     * @method Show\Field|Collection run_date(string $label = null)
-     * @method Show\Field|Collection run_status(string $label = null)
-     * @method Show\Field|Collection run_status_log(string $label = null)
      * @method Show\Field|Collection user_name(string $label = null)
      * @method Show\Field|Collection aclick(string $label = null)
      * @method Show\Field|Collection action_cost(string $label = null)
@@ -575,7 +575,7 @@ namespace Dcat\Admin {
 
 namespace Dcat\Admin\Grid {
     /**
-     
+     * @method $this newCopyable(...$params)
      */
     class Column {}
 
