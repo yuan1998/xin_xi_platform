@@ -26,7 +26,7 @@ class ChangeBaiduAccountTableChangeTargetsFieldType extends Migration
     public function down()
     {
         Schema::table('baidu_accounts', function (Blueprint $table) {
-            $table->dropColumn('targets');
+            $table->string('targets')->nullable()->change();
         });
     }
 }
