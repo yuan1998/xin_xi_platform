@@ -167,9 +167,9 @@ class BaiduAccount extends Model
         return BaiduClient::getOauthReportData([
             "accessToken" => $token,
             "userName" => $this->username,
-            "action"=> "API-PYTHON"
+            "action" => "API-PYTHON"
         ], array_merge([
-            'reportType' => 2208157,
+            'reportType' => 2290316,
             "timeUnit" => "DAY",
             "startRow" => 0,
             "rowCount" => 1000,
@@ -181,6 +181,7 @@ class BaiduAccount extends Model
                 "date",
                 "userName",
                 "campaignId",
+                "campaignName",
                 "impression",
                 "click",
                 "cost",
@@ -200,16 +201,19 @@ class BaiduAccount extends Model
             "endDate" => $end,
             'userIds' => collect($this->subUserList)->pluck('ucId')
         ]);
-        dd($errMsg,$data);
+
         if ($errMsg) {
             $this->run_status = RunStatus::ERROR_STATUS;
             $this->run_status_log = "{$this->username} : $errMsg";
+
+            $this->save();
+            return [$this->run_status_log, null];
         } else {
             $this->run_status = RunStatus::OK_STATUS;
             $this->run_status_log = "获取成功";
-            dd($data);
         }
         $this->save();
+        return [null, $data];
     }
 
     public static function test()

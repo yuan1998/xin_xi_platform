@@ -21,5 +21,6 @@ Route::group([
     Route::get('auth/vivo', "AccountAuthController@vivoAuth")->name('oauth.vivo');
     Route::get('auth/jl', "AccountAuthController@juliangAuth")->name('oauth.jl');
     Route::get('auth/ks', "AccountAuthController@ksAuth")->name('oauth.ks');
+    Route::get('getBaiduSearchAccount', "AccountAuthController@getBaiduSearchAccount")->name('api.getBaiduSearchAccount');
     Route::get('test', "AccountAuthController@test")->name('api.test');
 });
