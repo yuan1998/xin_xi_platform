@@ -128,7 +128,7 @@ class JlAccount extends Model
                 Log::error("未知的角色",[$this['advertiser_role']]);
                 return ["未知的角色.无法获取账户.",null];
         }
-        if(!count($list))
+        if(!$list ||!count($list))
             return ["无法获取账户.{$this['advertiser_name']}",null];
 
 
