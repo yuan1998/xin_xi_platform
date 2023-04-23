@@ -91,6 +91,8 @@ class AccountAuthController extends Controller
         return response([
             'code' => 1,
             'message' => '授权成功',
+            'username' => $result['masterName'],
+            'accessToken' => $tokenResult['accessToken'],
             'userList' => $subUser
         ]);
     }
