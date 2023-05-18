@@ -52,7 +52,6 @@ class SettingForm extends Form
      */
     public function default()
     {
-
         return admin_setting()->toArray();
     }
 }

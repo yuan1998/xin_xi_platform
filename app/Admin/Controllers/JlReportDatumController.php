@@ -52,9 +52,9 @@ class JlReportDatumController extends AdminController
                     $start = $this->input['start'] ?? null;
                     $end = $this->input['end'] ?? null;
                     if ($start)
-                        $query->where('stat_datetime', ">=", "$start 00:00:00");
+                        $query->whereDate('stat_datetime', ">=", "$start 00:00:00");
                     if ($end)
-                        $query->where('stat_datetime', "<=", "$end 23:59:59");
+                        $query->whereDate('stat_datetime', "<=", "$end 23:59:59");
                 })->date();
             });
         });
