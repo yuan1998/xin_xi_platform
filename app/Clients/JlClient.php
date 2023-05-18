@@ -3,6 +3,7 @@
 namespace App\Clients;
 
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 
 class JlClient extends BaseClient
 {
@@ -89,7 +90,7 @@ class JlClient extends BaseClient
 
         $data = array_merge([
             'advertiser_id' => 'xxxxx',
-            "dimensions" => json_encode(["stat_time_day","cdp_promotion_name","cdp_promotion_id","cdp_project_name","cdp_project_id"]),
+            "dimensions" => json_encode(["stat_time_day", "cdp_promotion_name", "cdp_promotion_id", "cdp_project_name", "cdp_project_id"]),
             "metrics" => json_encode(["stat_cost", "show_cnt", "cpm_platform", "click_cnt", "ctr", "cpc_platform", "convert_cnt", "conversion_cost", "conversion_rate", "deep_convert_cnt", "deep_convert_cost", "deep_convert_rate"]),
             "filters" => json_encode([]),
             "order_by" => json_encode([
@@ -114,8 +115,11 @@ class JlClient extends BaseClient
         $content = $response->getBody()->getContents();
         $jsonData = json_decode($content, true);
         $status = data_get($jsonData, 'code') === 0;
-        if ($status)
+        Log::info('debug new version api', ['advertiser_id' => $data['advertiser_id'], 'status' => $status, 'req_id' => data_get($jsonData, 'request_id')]);
+        if ($status) {
             return [null, data_get($jsonData, 'data.rows', [])];
+        }
+
 
         return [data_get($jsonData, 'message', '获取失败'), null];
     }

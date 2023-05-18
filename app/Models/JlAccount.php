@@ -102,6 +102,7 @@ class JlAccount extends Model
     {
 
         $list = [];
+        $messages = [];
         switch ($this['advertiser_role']) {
             case 1 :
                 $list[] = [
@@ -126,13 +127,13 @@ class JlAccount extends Model
                 break;
             default:
                 Log::error("未知的角色",[$this['advertiser_role']]);
-                return ["未知的角色.无法获取账户.",null];
+                $messages[] = "未知的角色. {$this['advertiser_role']} 无法获取账户.";
         }
         if(!$list ||!count($list))
-            return ["无法获取账户.{$this['advertiser_name']}",null];
+            $messages[] = "无法获取账户.{$this['advertiser_name']}";
+        if(count($messages))
+            return [$messages , null];
 
-
-        $messages = [];
         $data = [];
         foreach ($list as $account) {
             $id = $account['advertiser_id'];
