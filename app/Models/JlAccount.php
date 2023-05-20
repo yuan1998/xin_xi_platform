@@ -113,26 +113,34 @@ class JlAccount extends Model
                 break;
             case 2:
                 $majordomoChild = JlClient::getMajordomoAccount($this->advertiser_id, $token);
-                $list = data_get($majordomoChild, 'data.list');
-
-                if ($list) {
-                    foreach ($list as $item) {
-                        $list[] = [
-                            'advertiser_id' => $item['advertiser_id'],
-                            'advertiser_name' => $item['advertiser_name'],
-                            'access_token' => $token,
-                        ];
+                $code = data_get($majordomoChild, 'code');
+                if ($code === 0) {
+                    $list = data_get($majordomoChild, 'data.list');
+                    if ($list) {
+                        foreach ($list as $item) {
+                            $list[] = [
+                                'advertiser_id' => $item['advertiser_id'],
+                                'advertiser_name' => $item['advertiser_name'],
+                                'access_token' => $token,
+                            ];
+                        }
+                    } else {
+                        Log::info('巨量获取子账号 返回信息Debug' , [$majordomoChild]);
+                        $messages[] = "{$this['advertiser_name']}: 获取子账号数据返回空";
                     }
+                } else {
+                    Log::info('巨量获取子账号 返回信息Debug' , [$majordomoChild]);
+                    $msg = data_get($majordomoChild, 'message', '未知错误');
+                    $messages[] = "{$this['advertiser_name']}: $msg ;";
                 }
                 break;
             default:
-                Log::error("未知的角色",[$this['advertiser_role']]);
+                Log::error("未知的角色", [$this['advertiser_role']]);
                 $messages[] = "未知的角色. {$this['advertiser_role']} 无法获取账户.";
         }
-        if(!$list ||!count($list))
-            $messages[] = "无法获取账户.{$this['advertiser_name']}";
-        if(count($messages))
-            return [$messages , null];
+
+        if (count($messages))
+            return [$messages, null];
 
         $data = [];
         foreach ($list as $account) {
