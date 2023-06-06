@@ -239,14 +239,19 @@ class JlAccount extends Model
         return static::getAccountReportData($dateString, $dateString);
     }
 
+    public  function getNewVersionAdConfig() {
+        $token = $this->getAccessToken();
+        [$msg ,$result] = JlClient::getNewVersionAdConfig($this->advertiser_id, $token);
+        dd($msg , $result);
+    }
 
     public static function test()
     {
-        $account = static::find(4);
-        $data = $account->getReportData('2023-04-14', '2023-04-14');
+        $account = static::query()->where('run_status' , RunStatus::OK_STATUS)->first();
+        $account->getNewVersionAdConfig();
 //        $majordomoChild = JlClient::getMajordomoAccount($account->advertiser_id, $token);
 //        dd($majordomoChild);
-        dd($data);
+
 
     }
 
