@@ -251,7 +251,7 @@ class JlAccount extends Model
     {
         $account = static::query()
             ->where('run_status' , RunStatus::OK_STATUS)
-            ->where('advertiser_role' , '2')
+            ->where('advertiser_role' , '1')
             ->first();
         $account->getNewVersionAdConfig();
 //        $majordomoChild = JlClient::getMajordomoAccount($account->advertiser_id, $token);
