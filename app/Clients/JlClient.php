@@ -121,7 +121,6 @@ class JlClient extends BaseClient
     public static function getNewVersionAdvertiserPlanData(array $data, string $token)
     {
         $page = 1;
-        $lastPage = 0;
         $result = [];
         $message = null;
         do {
@@ -136,7 +135,7 @@ class JlClient extends BaseClient
                 $message = '获取数据失败,无法获取总页数';
                 break;
             }
-            $result = array_merge($result, data_get($response, 'data.rows', []));
+            $result = array_merge($result, data_get($response, 'rows', []));
             $page++;
         } while ($page <= $lastPage);
 
