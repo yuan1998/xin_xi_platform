@@ -71,12 +71,7 @@ class JlClient extends BaseClient
 
         $content = $response->getBody()->getContents();
         $jsonData = json_decode($content, true);
-        $status = data_get($jsonData, 'code') === 0;
-
-        if ($status)
-            return [null, data_get($jsonData, 'data')];
-
-        return [data_get($jsonData, 'message', '获取失败'), null];
+        dd($jsonData);
     }
 
     public static function getNewVersionAdvertiserPlanDataOfApi($data, $token)

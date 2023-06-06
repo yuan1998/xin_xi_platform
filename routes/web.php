@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/xin_xi/test',function () {
-    $account = \App\Models\JlAccount::query()
-        ->where('run_status' , RunStatus::OK_STATUS)
-        ->where('advertiser_role' , "<>",'2')
-        ->first();
+    $account = \App\Models\JlAccount::query()->where('run_status' , RunStatus::OK_STATUS)->first();
     $account->getNewVersionAdConfig();
 });
