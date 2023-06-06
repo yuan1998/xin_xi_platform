@@ -170,10 +170,7 @@ class JlAccount extends Model
                 $messages[] = "新版 $id : $newMsg";
             }
             if ($newResult && count($newResult)) {
-                Log::info("新版数据DEBUG" , [
-                    'id' => $id,
-                    'count' => count($newResult),
-                ]);
+
                 $newResult = collect($newResult)->map(function ($item) {
                     return [
                         "campaign_id" => data_get($item, 'dimensions.cdp_project_id'),
@@ -192,6 +189,10 @@ class JlAccount extends Model
                         "show" => data_get($item, 'metrics.show_cnt', 0),
                     ];
                 })->toArray();
+                Log::info("新版数据DEBUG" , [
+                    'id' => $id,
+                    'count' => $newResult,
+                ]);
                 $data = array_merge($data, $newResult);
             }
         }
