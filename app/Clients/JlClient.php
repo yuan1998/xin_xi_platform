@@ -132,7 +132,7 @@ class JlClient extends BaseClient
                 break;
             }
             $lastPage = data_get($response, 'page_info.total_page');
-            if (!$lastPage) {
+            if (is_null($lastPage)) {
                 $message = '获取数据失败,无法获取总页数';
                 break;
             }
