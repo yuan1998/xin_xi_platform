@@ -78,8 +78,8 @@ class JlClient extends BaseClient
     {
         $data = array_merge([
             'advertiser_id' => 'xxxxx',
-            "dimensions" => json_encode(["stat_time_day", "cdp_promotion_name", "cdp_promotion_id", "cdp_project_name", "cdp_project_id"]),
-            "metrics" => json_encode(["stat_cost", "show_cnt", "cpm_platform", "click_cnt", "ctr", "cpc_platform", "convert_cnt", "conversion_cost", "conversion_rate", "deep_convert_cnt", "deep_convert_cost", "deep_convert_rate"]),
+            "dimensions" => json_encode(["stat_time_day","cdp_promotion_name","cdp_promotion_id","ad_platform_cdp_promotion_bid","cdp_project_id","cdp_project_name"]),
+            "metrics" => json_encode(["stat_cost","show_cnt","cpm_platform","click_cnt","ctr","cpc_platform","convert_cnt","conversion_cost","conversion_rate","deep_convert_cnt","deep_convert_cost","deep_convert_rate"]),
             "filters" => json_encode([]),
             "order_by" => json_encode([
                 [
@@ -136,7 +136,7 @@ class JlClient extends BaseClient
                 $message = '获取数据失败,无法获取总页数';
                 break;
             }
-            $result = array_merge($result, data_get($response, 'page_info.rows', []));
+            $result = array_merge($result, data_get($response, 'data.rows', []));
             $page++;
         } while ($page <= $lastPage);
 

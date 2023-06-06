@@ -102,15 +102,18 @@ class JlAccount extends Model
     {
 
         $list = [
-            [
-                'advertiser_id' => $this->advertiser_id,
-                'advertiser_name' => $this->advertiser_name,
-                'access_token' => $token,
-            ]
+
         ];
         $messages = [];
         $data = [];
         switch ($this['advertiser_role']) {
+            case 1:
+                $list[] = [
+                    'advertiser_id' => $this->advertiser_id,
+                    'advertiser_name' => $this->advertiser_name,
+                    'access_token' => $token,
+                ];
+                break;
             case 2:
                 $majordomoChild = JlClient::getMajordomoAccount($this->advertiser_id, $token);
                 $code = data_get($majordomoChild, 'code');
