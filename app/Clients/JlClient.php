@@ -74,7 +74,7 @@ class JlClient extends BaseClient
         $status = data_get($jsonData, 'code') === 0;
 
         if ($status)
-            return [null, data_get($jsonData, 'data.list', [])];
+            return [null, data_get($jsonData, 'data')];
 
         return [data_get($jsonData, 'message', '获取失败'), null];
     }

@@ -244,7 +244,7 @@ class JlAccount extends Model
         [$msg ,$result] = JlClient::getNewVersionAdConfig([
             'advertiser_id' => $this->advertiser_id,
         ], $token);
-        dd($msg , $result);
+        dd($msg , $result,$this);
     }
 
     public static function test()
