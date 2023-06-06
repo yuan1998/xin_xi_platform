@@ -163,8 +163,8 @@ class JlAccount extends Model
             }
 
             if (!!$newMsg)  {
-                Log::info("新版 有错误" , ['msg' => $msg,'id' => $id]);
-                $messages[] = "新版 $id : $msg";
+                Log::info("新版 有错误" , ['msg' => $newMsg,'id' => $id]);
+                $messages[] = "新版 $id : $newMsg";
             }
             if ($newResult && count($newResult)) {
                 Log::info("新版数据DEBUG" , [
