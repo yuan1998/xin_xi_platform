@@ -152,7 +152,7 @@ class JlAccount extends Model
                 "end_time" => $endDate,
             ], $token);
 
-            if ($msg)
+            if (!!$msg)
                 $messages[] = "$id : $msg";
             if ($result && count($result)) {
                 Log::info("旧版数据DEBUG" , [
@@ -162,7 +162,7 @@ class JlAccount extends Model
                 $data = array_merge($data, $result);
             }
 
-            if ($newMsg)  {
+            if (!!$newMsg)  {
                 Log::info("新版 有错误" , ['msg' => $msg,'id' => $id]);
                 $messages[] = "新版 $id : $msg";
             }
