@@ -162,8 +162,10 @@ class JlAccount extends Model
                 $data = array_merge($data, $result);
             }
 
-            if ($newMsg)
+            if ($newMsg)  {
+                Log::info("新版 有错误" , ['msg' => $msg,'id' => $id]);
                 $messages[] = "新版 $id : $msg";
+            }
             if ($newResult && count($newResult)) {
                 Log::info("新版数据DEBUG" , [
                     'id' => $id,
