@@ -169,6 +169,10 @@ class JlAccount extends Model
                 Log::info("新版 有错误" , ['msg' => $newMsg,'id' => $id]);
                 $messages[] = "新版 $id : $newMsg";
             }
+            Log::info("新版数据DEBUG" , [
+                'id' => $id,
+                'count' => $newResult,
+            ]);
             if ($newResult && count($newResult)) {
 
                 $newResult = collect($newResult)->map(function ($item) {
@@ -189,10 +193,7 @@ class JlAccount extends Model
                         "show" => data_get($item, 'metrics.show_cnt', 0),
                     ];
                 })->toArray();
-                Log::info("新版数据DEBUG" , [
-                    'id' => $id,
-                    'count' => $newResult,
-                ]);
+
                 $data = array_merge($data, $newResult);
             }
         }
