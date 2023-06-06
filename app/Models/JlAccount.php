@@ -239,9 +239,11 @@ class JlAccount extends Model
         return static::getAccountReportData($dateString, $dateString);
     }
 
-    public  function getNewVersionAdConfig() {
+    public function getNewVersionAdConfig() {
         $token = $this->getAccessToken();
-        [$msg ,$result] = JlClient::getNewVersionAdConfig($this->advertiser_id, $token);
+        [$msg ,$result] = JlClient::getNewVersionAdConfig([
+            'advertiser_id' => $this->advertiser_id,
+        ], $token);
         dd($msg , $result);
     }
 
