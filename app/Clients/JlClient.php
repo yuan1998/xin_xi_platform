@@ -79,15 +79,8 @@ class JlClient extends BaseClient
         return [data_get($jsonData, 'message', '获取失败'), null];
     }
 
-    /**
-     * 获取广告主计划数据 - 新版
-     * @param $data  array Body参数
-     * @param $token string access_token
-     * @return mixed
-     */
-    public static function getNewVersionAdvertiserPlanData(array $data, string $token)
+    public static function getNewVersionAdvertiserPlanDataOfApi($data, $token)
     {
-
         $data = array_merge([
             'advertiser_id' => 'xxxxx',
             "dimensions" => json_encode(["stat_time_day", "cdp_promotion_name", "cdp_promotion_id", "cdp_project_name", "cdp_project_id"]),
@@ -115,13 +108,44 @@ class JlClient extends BaseClient
         $content = $response->getBody()->getContents();
         $jsonData = json_decode($content, true);
         $status = data_get($jsonData, 'code') === 0;
-        Log::info('debug new version api', ['advertiser_id' => $data['advertiser_id'], 'status' => $status, 'req_id' => data_get($jsonData, 'request_id')]);
+        Log::info('debug new version api', ['advertiser_id' => $data['advertiser_id'], 'status' => $jsonData]);
         if ($status) {
-            return [null, data_get($jsonData, 'data.rows', [])];
+            return [null, data_get($jsonData, 'data', [])];
         }
 
 
         return [data_get($jsonData, 'message', '获取失败'), null];
+    }
+
+    /**
+     * 获取广告主计划数据 - 新版
+     * @param $data  array Body参数
+     * @param $token string access_token
+     * @return mixed
+     */
+    public static function getNewVersionAdvertiserPlanData(array $data, string $token)
+    {
+        $page = 1;
+        $lastPage = 0;
+        $result = [];
+        $message = null;
+        do {
+            $data['page'] = $page;
+            [$msg, $response] = static::getNewVersionAdvertiserPlanDataOfApi($data, $token);
+            if ($msg) {
+                $message = $msg;
+                break;
+            }
+            $lastPage = data_get($response, 'page_info.total_page');
+            if (!$lastPage) {
+                $message = '获取数据失败,无法获取总页数';
+                break;
+            }
+            $result = array_merge($result, data_get($response, 'page_info.rows', []));
+            $page++;
+        } while ($page <= $lastPage);
+
+        return [$message, $result];
     }
 
 

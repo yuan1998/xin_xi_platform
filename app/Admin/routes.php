@@ -15,7 +15,6 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->get('/admin_setting', 'HomeController@setting');
 
-
     $router->resource("vivo_apps", "VivoAppController");
     $router->resource("vivo_accounts", "VivoAccountController");
     $router->resource("vivo_report_data", "VivoReportDatumController");

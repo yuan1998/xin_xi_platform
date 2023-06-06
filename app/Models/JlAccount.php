@@ -101,16 +101,16 @@ class JlAccount extends Model
     public function getChildAccountReportData($token, $startDate, $endDate): array
     {
 
-        $list = [];
+        $list = [
+            [
+                'advertiser_id' => $this->advertiser_id,
+                'advertiser_name' => $this->advertiser_name,
+                'access_token' => $token,
+            ]
+        ];
         $messages = [];
+        $data = [];
         switch ($this['advertiser_role']) {
-            case 1 :
-                $list[] = [
-                    'advertiser_id' => $this->advertiser_id,
-                    'advertiser_name' => $this->advertiser_name,
-                    'access_token' => $token,
-                ];
-                break;
             case 2:
                 $majordomoChild = JlClient::getMajordomoAccount($this->advertiser_id, $token);
                 $code = data_get($majordomoChild, 'code');
@@ -137,12 +137,8 @@ class JlAccount extends Model
             default:
                 Log::error("未知的角色", [$this['advertiser_role']]);
                 $messages[] = "未知的角色. {$this['advertiser_role']} 无法获取账户.";
+                break;
         }
-
-        if (count($messages))
-            return [$messages, null];
-
-        $data = [];
         foreach ($list as $account) {
             $id = $account['advertiser_id'];
             [$msg, $result] = JlClient::getAdvertiserPlanData([
@@ -158,12 +154,21 @@ class JlAccount extends Model
 
             if ($msg)
                 $messages[] = "$id : $msg";
-            if ($result && count($result))
+            if ($result && count($result)) {
+                Log::info("旧版数据DEBUG" , [
+                    'id' => $id,
+                    'count' => count($result),
+                ]);
                 $data = array_merge($data, $result);
+            }
 
             if ($newMsg)
                 $messages[] = "新版 $id : $msg";
             if ($newResult && count($newResult)) {
+                Log::info("新版数据DEBUG" , [
+                    'id' => $id,
+                    'count' => count($newResult),
+                ]);
                 $newResult = collect($newResult)->map(function ($item) {
                     return [
                         "campaign_id" => data_get($item, 'dimensions.cdp_project_id'),
@@ -181,8 +186,6 @@ class JlAccount extends Model
                         "convert" => data_get($item, 'metrics.convert_cnt', 0),
                         "show" => data_get($item, 'metrics.show_cnt', 0),
                     ];
-                })->filter(function ($item) {
-                    return $item['campaign_id'] && $item['ad_id'] && $item['stat_datetime'] && $item['cost'] && $item['convert'] && $item['show'];
                 })->toArray();
                 $data = array_merge($data, $newResult);
             }
