@@ -260,10 +260,8 @@ class JlClient extends BaseClient
 
     public static function getMajordomoAccount($id, $accessToken)
     {
-        $response = self::get(static::$request_url['majordomo_account'], [
-            'form_params' => [
-                'advertiser_id' => $id,
-            ],
+        $url= static::$request_url['majordomo_account'];
+        $response = self::get("$url?advertiser_id=$id", [
             'headers' => [
                 "Access-Token" => $accessToken,
             ]

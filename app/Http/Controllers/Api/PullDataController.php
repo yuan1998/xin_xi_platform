@@ -67,7 +67,7 @@ class PullDataController extends Controller
                 $data = UcAccount::getAccountReportData($startDate->toDateString(), $endDate->toDateString());
                 break;
             case "bd" :
-                $data = BaiduAccount::getAccountReportData($startDate->toDateString(), $endDate->toDateString());
+                $data = BaiduAccount::getOauthAccountReportData($startDate->toDateString(), $endDate->toDateString(),2276038);
                 break;
             case "vivo" :
                 $data = VivoAccount::getAccountReportData($startDate->toDateString(), $endDate->toDateString());

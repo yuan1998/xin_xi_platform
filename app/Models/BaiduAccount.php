@@ -42,6 +42,24 @@ class BaiduAccount extends Model
         0 => 'Token',
         1 => 'OAuth2',
     ];
+    static $reportColumns = [
+        '2290316' => [
+            "date",
+            "userName",
+            "campaignId",
+            "campaignName",
+            "impression",
+            "click",
+            "cost",
+            "ctr",
+            "cpc",
+            "cpm",
+            "bridgeConversion",
+        ],
+        '2149145' => ["date", "userName", "impression", "click", "cost", "ctr", "cpc"],
+        '2276038' => ["date", "userName", "campaignNameStatus", "impression", "click", "cost", "ctr", "cpc",'aggrFormSubmitSuccess'],
+        '2330652' => ["date", "adGroupNameStatus", "impression", "click", "cost", "ctr", "cpc", "ocpcTransType", "ocpcTargetTrans", "ocpcTargetTransCPC", "ocpcTargetTransRatio"],
+    ];
 
     protected $casts = [
         'subUserList' => 'json'
@@ -52,6 +70,12 @@ class BaiduAccount extends Model
         return $this->hasOne(BdApp::class, 'id', 'app_id');
     }
 
+    /**
+     * @param $start
+     * @param $end
+     * @return string
+     * @deprecated
+     */
     public function getReportData($start, $end): string
     {
         $this->run_date = now();
@@ -74,7 +98,13 @@ class BaiduAccount extends Model
         return $this->run_status_log;
     }
 
-
+    /**
+     * @param $start
+     * @param $end
+     * @param $accounts
+     * @return array
+     * @deprecated
+     */
     public static function getAccountReportData($start, $end, $accounts = null): array
     {
         $accounts = $accounts ?: static::query()->where('enable', 1)->get();
@@ -85,14 +115,14 @@ class BaiduAccount extends Model
         return $result;
     }
 
-    public static function getOauthAccountReportData($start, $end, $accounts = null): array
+    public static function getOauthAccountReportData($start, $end, $reportType = null, $accounts = null): array
     {
         $accounts = $accounts ?: static::query()->where('authType', 1)
             ->where('enable', 1)
             ->get();
         $result = [];
         foreach ($accounts as $account) {
-            $result[$account->username] = $account->getOauthReportDataOfDay($start, $end);
+            $result[$account->username] = $account->getOauthReportDataOfDay($start, $end, $reportType);
         }
         return $result;
     }
@@ -193,27 +223,46 @@ class BaiduAccount extends Model
         ], $data));
     }
 
-    public function getOauthReportDataOfDay($start, $end)
+    public function getReportColumns($reportType)
     {
+
+
+    }
+
+    public function getOauthReportDataOfDay($start, $end, $reportType)
+    {
+        $reportType = $reportType ?: 2149145;
+        $columns = data_get(static::$reportColumns, $reportType);
         $this->run_date = now();
-        [$errMsg, $data] = $this->getOauthReportData([
-            "startDate" => $start,
-            "endDate" => $end,
-            'userIds' => collect($this->subUserList)->pluck('ucId')
-        ]);
+        if ($columns) {
+            [$errMsg, $data] = $this->getOauthReportData([
+                "reportType" => $reportType,
+                "startDate" => $start,
+                "endDate" => $end,
+                'userIds' => collect($this->subUserList)->pluck('ucId')
+            ]);
 
-        if ($errMsg) {
-            $this->run_status = RunStatus::ERROR_STATUS;
-            $this->run_status_log = "{$this->username} : $errMsg";
+            if ($errMsg) {
+                $this->run_status = RunStatus::ERROR_STATUS;
+                $this->run_status_log = "{$this->username} : $errMsg";
 
-            $this->save();
-            return [$this->run_status_log, null];
+                $this->save();
+                return [$this->run_status_log, null];
+            } else {
+                $this->run_status = RunStatus::OK_STATUS;
+                $this->run_status_log = "获取成功";
+
+                if ($data)
+                    BaiduReportData::saveReportData($data,$reportType);
+            }
         } else {
-            $this->run_status = RunStatus::OK_STATUS;
-            $this->run_status_log = "获取成功";
+            $this->run_status = RunStatus::ERROR_STATUS;
+            $this->run_status_log = "{$this->username} : 错误的ReportType";
         }
+
+
         $this->save();
-        return [null, $data];
+        return $this->run_status_log;
     }
 
     public static function test()

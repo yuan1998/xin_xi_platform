@@ -24,7 +24,7 @@ class BaiduAccountController extends AdminController
 //            $grid->column('password');
             $grid->column('authType')->using(BaiduAccount::$AuthTypeOptions);
             $grid->column('type')->using(BaiduAccount::$TypeOptions);
-//            $grid->column('targets');
+            $grid->column('enable')->switch();
             $grid->column('created_at');
 //            $grid->column('updated_at')->sortable();
 

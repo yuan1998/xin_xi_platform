@@ -37,11 +37,13 @@ class BaiduReportData extends Model
         "formSubmitCost",
     ];
 
-    public static function saveReportData($data)
+    public static function saveReportData($data,$reportType)
     {
         foreach ($data as $item) {
+            dd($item);
             static::updateOrCreate([
                 'date' => $item['date'],
+                'report_type' => $reportType,
                 'userName' => $item['userName'],
                 'campaignId' => $item['campaignId'],
             ], $item);

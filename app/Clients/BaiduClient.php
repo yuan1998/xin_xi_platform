@@ -130,6 +130,14 @@ class BaiduClient extends BaseClient
         return [null, $dddd];
     }
 
+    /**
+     * @param $target
+     * @param $data
+     * @param $account
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @deprecated
+     */
     public static function getReportDataOfTarget($target, $data, $account): array
     {
         $url = "https://api.baidu.com/json/sms/service/OpenApiReportService/getReportData";
@@ -182,6 +190,12 @@ class BaiduClient extends BaseClient
         return [null, data_get($result, 'body.data.0.rows', [])];
     }
 
+    /**
+     * @param $data
+     * @param $account
+     * @return array
+     * @deprecated
+     */
     public static function getAllTargets($data, $account): array
     {
         $targets = data_get($account, 'targets');
