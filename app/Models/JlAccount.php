@@ -50,7 +50,7 @@ class JlAccount extends Model
         $token = data_get($result, 'access_token');
         if ($token)
             static::saveToken($result, $this->token_id);
-        return $result;
+        return $token;
     }
 
 
